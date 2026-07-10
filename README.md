@@ -8,758 +8,193 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --red: #ff2424;
-      --dark-red: #920000;
-      --bg: #070911;
-      --panel: rgba(10, 13, 25, 0.88);
-      --muted: #c4c7d1;
-      --green: #59ff8a;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--bg);
-      color: white;
-      font-family: "Poppins", sans-serif;
-      overflow-x: hidden;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: #080a12; color: #fff; font-family: "Poppins", sans-serif; overflow-x: hidden; }
 
     .hero {
-      min-height: 100vh;
-      padding: 18px;
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
+      min-height: 100vh; padding: 25px; position: relative; overflow: hidden;
       background:
-        linear-gradient(rgba(5, 7, 15, 0.70), rgba(5, 7, 15, 0.96)),
+        radial-gradient(circle at top, rgba(255,43,43,.22), transparent 45%),
+        linear-gradient(rgba(5,7,15,.78), rgba(5,7,15,.96)),
         url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1800&q=90");
-      background-position: center;
-      background-size: cover;
+      background-size: cover; background-position: center;
     }
 
     .hero::before {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      width: 800px;
-      height: 800px;
-      top: -400px;
-      left: -340px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 20, 20, 0.48), transparent 68%);
-      animation: redOrb 11s ease-in-out infinite alternate;
+      content: ""; position: absolute; inset: -50%;
+      background: radial-gradient(circle, rgba(255,30,30,.13), transparent 45%);
+      animation: backgroundGlow 7s ease-in-out infinite alternate; pointer-events: none;
     }
 
     .hero::after {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      inset: 0;
-      opacity: 0.34;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255, 65, 65, 0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 65, 65, 0.12) 1px, transparent 1px);
-      background-size: 46px 46px;
-      mask-image: linear-gradient(to bottom, #000, transparent 80%);
-      animation: gridMove 16s linear infinite;
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background:
+        linear-gradient(115deg, transparent 30%, rgba(255,45,45,.09) 45%, transparent 60%),
+        linear-gradient(290deg, transparent 35%, rgba(255,45,45,.06) 50%, transparent 65%);
+      animation: lightMove 9s ease-in-out infinite alternate;
     }
 
-    @keyframes redOrb {
-      from {
-        transform: translate(0, 0) scale(1);
-      }
-      to {
-        transform: translate(55%, 45%) scale(1.3);
-      }
-    }
+    @keyframes backgroundGlow { from { transform:translate(-8%,-5%) scale(1); } to { transform:translate(10%,8%) scale(1.25); } }
+    @keyframes lightMove { from { transform:translateX(-5%) scale(1); opacity:.4; } to { transform:translateX(5%) scale(1.12); opacity:1; } }
 
-    @keyframes gridMove {
-      from {
-        background-position: 0 0;
-      }
-      to {
-        background-position: 46px 46px;
-      }
+    .particles { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:1; }
+    .particle {
+      position:absolute; width:4px; height:4px; background:#ff4a4a; border-radius:50%;
+      opacity:0; box-shadow:0 0 10px #ff2020, 0 0 20px #ff0000;
+      animation:particleFloat linear infinite;
+    }
+    @keyframes particleFloat {
+      0% { transform:translateY(110vh) scale(.2); opacity:0; }
+      10% { opacity:.8; } 85% { opacity:.45; }
+      100% { transform:translateY(-15vh) translateX(70px) scale(1.4); opacity:0; }
     }
 
     nav {
-      width: min(1200px, 100%);
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      position: relative;
-      z-index: 10;
-      animation: navDrop 0.7s ease both;
-    }
-
-    @keyframes navDrop {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .nav-left,
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-    }
-
-    .logo {
-      font-family: "Orbitron", sans-serif;
-      font-size: clamp(20px, 4vw, 31px);
-      font-weight: 900;
-      letter-spacing: 2px;
-      white-space: nowrap;
-      color: #ffffff;
-      text-shadow: 0 0 10px #ff2525, 0 0 25px #ff0000;
-      animation: logoGlow 2.3s ease-in-out infinite alternate;
-    }
-
-    .logo span,
-    .hero-title span,
-    .section-title span {
-      color: var(--red);
-    }
-
-    @keyframes logoGlow {
-      from {
-        text-shadow: 0 0 10px #ff2525, 0 0 25px #ff0000;
-      }
-      to {
-        text-shadow: 0 0 16px #ff5555, 0 0 42px #ff0000;
-      }
-    }
-
-    .viewer-count {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px 11px;
-      border: 1px solid rgba(255, 75, 75, 0.6);
-      border-radius: 12px;
-      background: rgba(12, 15, 28, 0.86);
-      font-family: "Orbitron", sans-serif;
-      font-size: 11px;
-      font-weight: 800;
-      box-shadow: 0 0 18px rgba(255, 30, 30, 0.18);
-      animation: viewerFloat 3s ease-in-out infinite;
-    }
-
-    .eye-icon {
-      width: 21px;
-      height: 13px;
-      position: relative;
-      border: 2px solid #ff5555;
-      border-radius: 50% / 70%;
-      display: inline-block;
-      box-shadow: 0 0 10px rgba(255, 60, 60, 0.65);
-    }
-
-    .eye-icon::after {
-      content: "";
-      position: absolute;
-      width: 5px;
-      height: 5px;
-      top: 2px;
-      left: 6px;
-      border-radius: 50%;
-      background: #ff5555;
-      box-shadow: 0 0 8px #ff2525;
-    }
-
-    #viewerNumber {
-      color: var(--green);
-      text-shadow: 0 0 10px rgba(89, 255, 138, 0.65);
-    }
-
-    .viewer-label {
-      font-size: 9px;
-      color: #e5e5e5;
-    }
-
-    @keyframes viewerFloat {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-4px);
-      }
-    }
-
-    .menu-button {
-      width: 52px;
-      height: 52px;
-      border: 1px solid rgba(255, 75, 75, 0.75);
-      border-radius: 14px;
-      background: rgba(17, 20, 34, 0.92);
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-      transition: 0.25s;
-    }
-
-    .menu-button:hover {
-      transform: scale(1.07);
-      box-shadow: 0 0 24px rgba(255, 40, 40, 0.65);
-    }
-
-    .menu-button span {
-      width: 23px;
-      height: 3px;
-      border-radius: 20px;
-      background: #ffffff;
-      transition: 0.25s;
-    }
-
-    .menu-button.active span:nth-child(1) {
-      transform: translateY(9px) rotate(45deg);
-    }
-
-    .menu-button.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .menu-button.active span:nth-child(3) {
-      transform: translateY(-9px) rotate(-45deg);
-    }
-
-    .menu {
-      position: absolute;
-      top: 65px;
-      right: 0;
-      width: 235px;
-      padding: 10px;
-      border: 1px solid rgba(255, 60, 60, 0.6);
-      border-radius: 16px;
-      background: rgba(9, 12, 23, 0.98);
-      box-shadow: 0 0 30px rgba(255, 30, 30, 0.25);
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-14px) scale(0.92);
-      transform-origin: top right;
-      transition: 0.22s ease;
-    }
-
-    .menu.show {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0) scale(1);
-    }
-
-    .menu a {
-      display: block;
-      margin: 3px 0;
-      padding: 11px 13px;
-      border-radius: 10px;
-      color: white;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      transition: 0.2s;
-    }
-
-    .menu a:hover {
-      transform: translateX(6px);
-      background: linear-gradient(135deg, #ff3636, #920000);
-    }
-
-    .hero-content {
-      width: min(930px, 100%);
-      margin: 125px auto 0;
-      text-align: center;
-      position: relative;
-      z-index: 2;
-      animation: heroEnter 0.9s ease both;
-    }
-
-    @keyframes heroEnter {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .hero-title {
-      font-family: "Orbitron", sans-serif;
-      font-size: clamp(38px, 8.7vw, 96px);
-      font-weight: 900;
-      letter-spacing: clamp(0px, 0.8vw, 5px);
-      line-height: 1;
-      white-space: nowrap;
-      color: white;
-      text-shadow: 0 0 10px #ff2a2a, 0 0 30px #ff0000, 0 0 55px rgba(255, 0, 0, 0.55);
-      animation: titlePulse 2.5s ease-in-out infinite alternate;
-    }
-
-    @keyframes titlePulse {
-      from {
-        transform: scale(1);
-      }
-      to {
-        transform: scale(1.025);
-      }
-    }
-
-    .hero-description {
-      max-width: 710px;
-      margin: 22px auto;
-      color: #d7d9e1;
-      font-size: 17px;
-      line-height: 1.7;
-    }
-
-    .server-box {
-      max-width: 600px;
-      margin: 34px auto 0;
-      padding: 25px;
-      border: 1px solid rgba(255, 64, 64, 0.75);
-      border-radius: 20px;
-      background: var(--panel);
-      backdrop-filter: blur(9px);
-      box-shadow: 0 0 35px rgba(255, 35, 35, 0.22);
-      animation: boxFloat 4s ease-in-out infinite;
-    }
-
-    @keyframes boxFloat {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-8px);
-      }
-    }
-
-    .server-box h2 {
-      font-family: "Orbitron", sans-serif;
-      font-size: 20px;
-      color: #ff4b4b;
-      margin-bottom: 12px;
-    }
-
-    .ip {
-      font-size: clamp(18px, 4.5vw, 24px);
-      font-weight: 800;
-      word-break: break-word;
-    }
-
-    .port {
-      margin-top: 7px;
-      color: #b8bcc8;
-    }
-
-    .status {
-      margin-top: 16px;
-      font-weight: 700;
-    }
-
-    .online {
-      color: var(--green);
-      text-shadow: 0 0 10px rgba(89, 255, 138, 0.65);
-      animation: onlineBlink 1.2s ease-in-out infinite alternate;
-    }
-
-    @keyframes onlineBlink {
-      from {
-        opacity: 0.55;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
-    .buttons {
-      margin-top: 28px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .btn {
-      padding: 14px 20px;
-      border: 1px solid transparent;
-      border-radius: 13px;
-      color: white;
-      text-decoration: none;
-      font-weight: 700;
-      transition: 0.25s;
-    }
-
-    .btn:hover {
-      transform: translateY(-5px) scale(1.04);
-    }
-
-    .join-btn {
-      background: linear-gradient(135deg, #ff2020, #a90000);
-      border-color: #ff6a6a;
-      box-shadow: 0 0 25px rgba(255, 35, 35, 0.4);
-    }
-
-    .discord-btn {
-      background: linear-gradient(135deg, #6978ff, #3c48c9);
-      border-color: #9aa2ff;
-      box-shadow: 0 0 22px rgba(93, 105, 255, 0.3);
-    }
-
-    .youtube-btn {
-      background: linear-gradient(135deg, #ff2020, #9f0000);
-      border-color: #ff7373;
-      box-shadow: 0 0 22px rgba(255, 25, 25, 0.3);
-    }
-
-    section {
-      padding: 88px 22px;
-      text-align: center;
-    }
-
-    .dark-section {
-      background: #0d101a;
-    }
-
-    .section-title {
-      font-family: "Orbitron", sans-serif;
-      font-size: clamp(28px, 5vw, 43px);
-      letter-spacing: 2px;
-      text-shadow: 0 0 14px rgba(255, 45, 45, 0.65);
-    }
-
-    .section-text {
-      max-width: 760px;
-      margin: 18px auto 40px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .grid {
-      max-width: 1150px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
-      gap: 19px;
-    }
-
-    .card {
-      padding: 25px 19px;
-      border: 1px solid #2b334a;
-      border-radius: 16px;
-      background: #131827;
-      transition: 0.25s;
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      border-color: #ff4444;
-      box-shadow: 0 0 25px rgba(255, 35, 35, 0.18);
-    }
-
-    .card h3 {
-      margin-bottom: 11px;
-      color: #ff4a4a;
-      font-size: 18px;
-    }
-
-    .card p {
-      color: #c5c8d2;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .owner-card {
-      max-width: 780px;
-      margin: auto;
-      padding: 35px 25px;
-      border: 1px solid rgba(255, 61, 61, 0.55);
-      border-radius: 20px;
-      background: linear-gradient(145deg, #151a2b, #0d101b);
-      box-shadow: 0 0 35px rgba(255, 30, 30, 0.17);
-    }
-
-    .owner-profile {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      border: 4px solid #ff4040;
-      border-radius: 50%;
-      box-shadow: 0 0 22px rgba(255, 40, 40, 0.7);
-      margin-bottom: 15px;
-      animation: profileFloat 3s ease-in-out infinite;
-    }
-
-    @keyframes profileFloat {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-7px);
-      }
-    }
-
-    .owner-card h3 {
-      font-family: "Orbitron", sans-serif;
-      font-size: 28px;
-    }
-
-    .owner-role {
-      margin: 8px 0 15px;
-      color: #ff4848;
-      font-weight: 700;
-    }
-
-    .owner-card p {
-      max-width: 580px;
-      margin: auto;
-      color: #c9c9c9;
-      line-height: 1.7;
-    }
-
-    .player-count {
-      margin-top: 25px;
-      font-family: "Orbitron", sans-serif;
-      font-size: 64px;
-      color: var(--green);
-      text-shadow: 0 0 18px rgba(89, 255, 138, 0.55);
-      animation: playerPulse 1.8s ease-in-out infinite alternate;
-    }
-
-    @keyframes playerPulse {
-      from {
-        transform: scale(1);
-      }
-      to {
-        transform: scale(1.1);
-      }
-    }
-
-    .leaderboard {
-      max-width: 720px;
-      margin: 35px auto 0;
-      overflow: hidden;
-      border: 1px solid #2a3148;
-      border-radius: 16px;
-      background: #131827;
-    }
-
-    .leaderboard h3 {
-      padding: 20px;
-      color: #ff4747;
-      background: #191f31;
-      font-family: "Orbitron", sans-serif;
-    }
-
-    .leader-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 16px 20px;
-      border-top: 1px solid #2a3148;
-      color: #d8d8d8;
-      transition: 0.2s;
-    }
-
-    .leader-row:hover {
-      background: rgba(255, 45, 45, 0.08);
-      padding-left: 27px;
-    }
-
-    .rank-number {
-      color: #ff4c4c;
-      font-weight: 800;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(35px);
-      transition: 0.7s ease;
-    }
-
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    footer {
-      padding: 28px 20px;
-      background: #05060a;
-      color: #929292;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    @media (max-width: 600px) {
-      .hero {
-        padding: 18px;
-      }
-
-      .viewer-label {
-        display: none;
-      }
-
-      .viewer-count {
-        padding: 10px;
-      }
-
-      .logo {
-        font-size: 20px;
-        letter-spacing: 1px;
-      }
-
-      .hero-content {
-        margin-top: 105px;
-      }
-
-      .hero-title {
-        font-size: clamp(35px, 9vw, 52px);
-        letter-spacing: 0;
-      }
-
-      .server-box {
-        padding: 22px 15px;
-      }
-
-      .buttons .btn {
-        width: min(100%, 280px);
-      }
+      max-width:1200px; margin:auto; padding:12px 16px; border-radius:18px;
+      display:flex; justify-content:space-between; align-items:center; position:relative; z-index:10;
+      background:rgba(8,10,18,.38); border:1px solid rgba(255,80,80,.15); backdrop-filter:blur(12px);
+      animation:fadeDown .8s ease both;
+    }
+    @keyframes fadeDown { from { opacity:0; transform:translateY(-25px); } to { opacity:1; transform:translateY(0); } }
+
+    .logo { font-family:"Orbitron",sans-serif; font-size:30px; font-weight:900; letter-spacing:3px; text-shadow:0 0 10px #ff2525,0 0 25px #f00; animation:logoGlow 2.2s ease-in-out infinite alternate; }
+    .logo span,.hero-content h1 span,.section-title span { color:#ff3434; }
+    @keyframes logoGlow { from { text-shadow:0 0 10px #ff2525,0 0 25px #f00; } to { text-shadow:0 0 15px #ff5656,0 0 42px #f00,0 0 70px rgba(255,0,0,.6); } }
+
+    .menu-button { width:52px; height:52px; border:1px solid rgba(255,75,75,.7); border-radius:13px; background:rgba(17,20,34,.88); cursor:pointer; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:6px; transition:.25s; }
+    .menu-button:hover { transform:scale(1.08) rotate(3deg); box-shadow:0 0 24px rgba(255,40,40,.7); }
+    .menu-button span { width:23px; height:3px; border-radius:20px; background:#fff; transition:.25s; }
+    .menu-button.active span:nth-child(1) { transform:translateY(9px) rotate(45deg); }
+    .menu-button.active span:nth-child(2) { opacity:0; transform:translateX(-15px); }
+    .menu-button.active span:nth-child(3) { transform:translateY(-9px) rotate(-45deg); }
+
+    .menu { display:none; position:absolute; top:68px; right:0; width:230px; padding:12px; border-radius:15px; background:rgba(14,17,29,.98); border:1px solid rgba(255,60,60,.55); box-shadow:0 0 25px rgba(255,30,30,.22); transform-origin:top right; }
+    .menu.show { display:block; animation:menuOpen .28s ease both; }
+    @keyframes menuOpen { from { opacity:0; transform:scale(.88) translateY(-15px); } to { opacity:1; transform:scale(1) translateY(0); } }
+    .menu a { display:block; padding:12px 14px; margin:4px 0; border-radius:9px; color:#fff; text-decoration:none; font-weight:600; transition:.2s; }
+    .menu a:hover { background:linear-gradient(135deg,#ff3636,#a90000); transform:translateX(7px); box-shadow:0 0 16px rgba(255,45,45,.35); }
+
+    .hero-content { max-width:900px; text-align:center; margin:145px auto 0; position:relative; z-index:2; animation:heroEnter 1s ease both; }
+    @keyframes heroEnter { from { opacity:0; transform:translateY(35px); } to { opacity:1; transform:translateY(0); } }
+    .hero-content h1 { font-family:"Orbitron",sans-serif; font-size:clamp(45px,8vw,92px); font-weight:900; letter-spacing:5px; text-shadow:0 0 10px #ff2a2a,0 0 30px #f00,0 0 55px rgba(255,0,0,.55); animation:titlePulse 2.4s ease-in-out infinite alternate; }
+    @keyframes titlePulse { from { transform:scale(1); } to { transform:scale(1.025); } }
+    .hero-content p { max-width:700px; margin:22px auto; color:#d1d1d1; font-size:17px; line-height:1.7; }
+
+    .server-box { max-width:580px; margin:35px auto 0; padding:25px; border-radius:18px; position:relative; overflow:hidden; background:rgba(13,16,28,.86); border:1px solid rgba(255,64,64,.65); box-shadow:0 0 30px rgba(255,35,35,.2); backdrop-filter:blur(8px); animation:floatingBox 3.5s ease-in-out infinite; }
+    .server-box::before { content:""; position:absolute; width:180%; height:70px; top:-90px; left:-40%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent); transform:rotate(-18deg); animation:shineMove 4.5s ease-in-out infinite; }
+    @keyframes floatingBox { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
+    @keyframes shineMove { 0%,45% { top:-100px; left:-50%; } 100% { top:220px; left:30%; } }
+    .server-box h2 { font-family:"Orbitron",sans-serif; color:#ff4545; margin-bottom:12px; font-size:20px; }
+    .ip { font-size:20px; font-weight:700; word-break:break-word; } .port { margin-top:7px; color:#b8b8b8; } .status { margin-top:16px; font-weight:600; }
+    .online { color:#54ff85; text-shadow:0 0 10px rgba(84,255,133,.6); animation:onlinePulse 1.2s ease-in-out infinite alternate; }
+    @keyframes onlinePulse { from { opacity:.55; } to { opacity:1; } }
+
+    .buttons { margin-top:28px; display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
+    .btn { padding:14px 21px; border-radius:12px; color:#fff; text-decoration:none; font-weight:700; border:1px solid transparent; transition:.25s; box-shadow:0 8px 20px rgba(0,0,0,.3); position:relative; overflow:hidden; }
+    .btn::before { content:""; position:absolute; top:0; left:-130%; width:70%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent); transform:skewX(-20deg); transition:.6s; }
+    .btn:hover::before { left:150%; } .btn:hover { transform:translateY(-5px) scale(1.05); }
+    .join-btn,.youtube-btn { background:linear-gradient(135deg,#ff2020,#b60000); border-color:#ff6464; } .discord-btn { background:linear-gradient(135deg,#6875ff,#3d48c7); border-color:#8b95ff; }
+
+    section { padding:90px 25px; text-align:center; } .dark-section { background:#0d101a; }
+    .section-title { font-family:"Orbitron",sans-serif; font-size:clamp(28px,5vw,42px); letter-spacing:2px; text-shadow:0 0 14px rgba(255,45,45,.65); }
+    .section-text { max-width:760px; margin:18px auto 42px; color:#bdbdbd; line-height:1.7; }
+    .features { max-width:1150px; margin:auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(225px,1fr)); gap:20px; }
+    .feature-card,.rule-card { padding:27px 20px; border-radius:16px; background:#131827; border:1px solid #282f46; transition:.25s; animation:cardBreath 4s ease-in-out infinite; }
+    .feature-card:hover,.rule-card:hover { transform:translateY(-8px) scale(1.02); border-color:#ff4444; box-shadow:0 0 25px rgba(255,35,35,.18); }
+    .feature-card h3,.rule-card h3 { color:#ff4a4a; margin-bottom:12px; font-size:19px; } .feature-card p,.rule-card p { color:#c4c4c4; font-size:14px; line-height:1.6; }
+    @keyframes cardBreath { 0%,100% { box-shadow:0 0 0 rgba(255,35,35,0); } 50% { box-shadow:0 0 20px rgba(255,35,35,.08); } }
+
+    .owner-card { max-width:780px; margin:auto; padding:35px 25px; border-radius:20px; background:linear-gradient(145deg,#151a2b,#0d101b); border:1px solid rgba(255,61,61,.55); box-shadow:0 0 35px rgba(255,30,30,.17); }
+    .owner-profile { width:120px; height:120px; object-fit:cover; border-radius:50%; border:4px solid #ff4040; box-shadow:0 0 22px rgba(255,40,40,.7); margin-bottom:15px; animation:profileFloat 3s ease-in-out infinite; }
+    @keyframes profileFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-7px); } }
+    .owner-card h3 { font-family:"Orbitron",sans-serif; font-size:28px; } .owner-role { color:#ff4848; font-weight:700; margin:8px 0 15px; } .owner-card p { max-width:580px; margin:auto; color:#c9c9c9; line-height:1.7; }
+
+    .player-count { margin-top:28px; font-family:"Orbitron",sans-serif; font-size:62px; color:#58ff87; text-shadow:0 0 18px rgba(88,255,135,.55); animation:countPulse 1.8s ease-in-out infinite alternate; }
+    @keyframes countPulse { from { transform:scale(1); } to { transform:scale(1.12); } }
+    .leaderboard { max-width:720px; margin:35px auto 0; overflow:hidden; border-radius:16px; border:1px solid #2a3148; background:#131827; }
+    .leaderboard h3 { padding:20px; color:#ff4747; background:#191f31; font-family:"Orbitron",sans-serif; }
+    .leader-row { display:flex; justify-content:space-between; padding:16px 20px; border-top:1px solid #2a3148; color:#d8d8d8; transition:.2s; } .leader-row:hover { background:rgba(255,50,50,.08); padding-left:28px; } .rank-number { color:#ff4c4c; font-weight:bold; }
+    .reveal { opacity:0; transform:translateY(35px); transition:.7s ease; } .reveal.active { opacity:1; transform:translateY(0); }
+    footer { background:#05060a; padding:28px; text-align:center; color:#929292; font-size:14px; }
+
+    ::-webkit-scrollbar { width:9px; } ::-webkit-scrollbar-track { background:#080a12; } ::-webkit-scrollbar-thumb { background:linear-gradient(#ff4545,#7c0000); border-radius:20px; }
+
+    @media (max-width:600px) {
+      .hero-content { margin-top:110px; } .logo { font-size:23px; } .server-box { padding:20px 15px; }
+      .particle:nth-child(n+13) { display:none; } .hero::after { animation:none; } .feature-card,.rule-card { animation:none; }
     }
   </style>
 </head>
-
 <body>
   <div class="hero" id="home">
+    <div class="particles" id="particles"></div>
+
     <nav>
-      <div class="nav-left">
-        <div class="viewer-count">
-          <span class="eye-icon"></span>
-          <span id="viewerNumber">1</span>
-          <span class="viewer-label">VIEWING</span>
-        </div>
-
-        <div class="logo">SIX<span>SEVEN</span></div>
-      </div>
-
-      <div class="nav-right">
-        <button class="menu-button" id="menuButton" onclick="toggleMenu()" aria-label="Open menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-
+      <div class="logo">SIX<span>SEVEN</span></div>
+      <div>
+        <button class="menu-button" onclick="toggleMenu()" aria-label="Open menu"><span></span><span></span><span></span></button>
         <div class="menu" id="menu">
-          <a href="#home" onclick="closeMenu()">⌂ Home</a>
-          <a href="#information" onclick="closeMenu()">⚔ Information</a>
-          <a href="#owner" onclick="closeMenu()">♛ Owner</a>
-          <a href="#players" onclick="closeMenu()">◉ Players</a>
-          <a href="#leaderboards" onclick="closeMenu()">★ Leaderboards</a>
-          <a href="#rules" onclick="closeMenu()">☰ Server Rules</a>
-          <a href="https://discord.gg/pjp23ub8cand" target="_blank" rel="noopener">💬 Join Discord</a>
-          <a href="https://youtube.com/@zeusduff?si=MY8Q24IPUKt_ip_H" target="_blank" rel="noopener">▶ YouTube</a>
+          <a href="#home" onclick="closeMenu()">🏠 Home</a><a href="#information" onclick="closeMenu()">⚔ Information</a><a href="#owner" onclick="closeMenu()">👑 Owner</a><a href="#players" onclick="closeMenu()">👥 Players</a><a href="#leaderboards" onclick="closeMenu()">🏆 Leaderboards</a><a href="#rules" onclick="closeMenu()">📜 Server Rules</a>
+          <a href="https://discord.gg/pjp23ub8" target="_blank">💬 Join Discord</a><a href="https://youtube.com/@zeusduff" target="_blank">▶ YouTube</a>
         </div>
       </div>
     </nav>
 
-    <main class="hero-content">
-      <h1 class="hero-title">SIX<span>SEVEN</span></h1>
-
-      <p class="hero-description">
-        The competitive Minecraft Bedrock UHC server. Survive, fight, rank up, and become a SixSeven legend.
-      </p>
-
-      <div class="server-box">
-        <h2>⚔ SERVER ADDRESS</h2>
-        <div class="ip">SixSevenUHCs.ddns.net</div>
-        <div class="port">Port: 19134</div>
-        <div class="status">Server Status: <span class="online">● Online</span></div>
-      </div>
-
-      <div class="buttons">
-        <a class="btn join-btn" href="#information">⚔ Explore Server</a>
-        <a class="btn discord-btn" href="https://discord.gg/pjp23ub8cand" target="_blank" rel="noopener">💬 Join Discord</a>
-        <a class="btn youtube-btn" href="https://youtube.com/@zeusduff?si=MY8Q24IPUKt_ip_H" target="_blank" rel="noopener">▶ YouTube</a>
-      </div>
-    </main>
+    <div class="hero-content">
+      <h1>SIX<span>SEVEN</span></h1>
+      <p>The competitive Minecraft Bedrock UHC server. Survive, fight, rank up, and become a SixSeven legend.</p>
+      <div class="server-box"><h2>⚔ SERVER ADDRESS</h2><div class="ip">SixSevenUHCs.ddns.net</div><div class="port">Port: 19134</div><div class="status">Server Status: <span class="online">● Online</span></div></div>
+      <div class="buttons"><a class="btn join-btn" href="#information">⚔ Explore Server</a><a class="btn discord-btn" href="https://discord.gg/pjp23ub8" target="_blank">💬 Join Discord</a><a class="btn youtube-btn" href="https://youtube.com/@zeusduff" target="_blank">▶ YouTube</a></div>
+    </div>
   </div>
 
-  <section id="information" class="reveal">
-    <h2 class="section-title">SERVER <span>INFORMATION</span></h2>
-    <p class="section-text">SixSeven is a competitive server for players who enjoy UHC battles, ranked matches, events, rewards, and a strong community.</p>
+  <section id="information" class="reveal"><h2 class="section-title">SERVER <span>INFORMATION</span></h2><p class="section-text">SixSeven is a competitive server for players who enjoy UHC battles, ranked matches, events, rewards, and a strong community.</p><div class="features"><div class="feature-card"><h3>⚔ UHC Mode</h3><p>Fight intense UHC battles, gather resources, and survive until you are the last player standing.</p></div><div class="feature-card"><h3>💬 Friendly Staff</h3><p>Helpful staff members keep the server fair, active, and enjoyable for everyone.</p></div><div class="feature-card"><h3>🏆 Ranked Matches</h3><p>Prove your skills, climb the ranks, and earn respect in competitive PvP.</p></div><div class="feature-card"><h3>📊 Leaderboards</h3><p>See the top players, strongest fighters, and biggest winners of SixSeven.</p></div><div class="feature-card"><h3>🎁 Giveaways</h3><p>Join Discord for giveaways, rewards, updates, and announcements.</p></div><div class="feature-card"><h3>📅 Frequent Events</h3><p>Enjoy tournaments, challenges, community events, and more exciting updates.</p></div></div></section>
 
-    <div class="grid">
-      <article class="card"><h3>⚔ UHC Mode</h3><p>Fight intense UHC battles, gather resources, and survive until you are the last player standing.</p></article>
-      <article class="card"><h3>💬 Friendly Staff</h3><p>Helpful staff members keep the server fair, active, and enjoyable for everyone.</p></article>
-      <article class="card"><h3>🏆 Ranked Matches</h3><p>Prove your skills, climb the ranks, and earn respect in competitive PvP.</p></article>
-      <article class="card"><h3>📊 Leaderboards</h3><p>See the top players, strongest fighters, and biggest winners of SixSeven.</p></article>
-      <article class="card"><h3>🎁 Giveaways</h3><p>Join Discord for giveaways, rewards, updates, and announcements.</p></article>
-      <article class="card"><h3>📅 Frequent Events</h3><p>Enjoy tournaments, challenges, community events, and more updates.</p></article>
-    </div>
-  </section>
+  <section class="dark-section reveal" id="owner"><h2 class="section-title">SERVER <span>OWNER</span></h2><p class="section-text">Meet the owner behind SixSeven.</p><div class="owner-card"><img class="owner-profile" src="https://i.imgur.com/6VBx3io.png" alt="Zyuuu Profile Picture"><h3>Zyuuu</h3><div class="owner-role">👑 Owner of SixSeven Server</div><p>Zyuuu is the owner and creator of SixSeven. The goal is to build a fun, competitive, and active Minecraft Bedrock community.</p></div></section>
 
-  <section class="dark-section reveal" id="owner">
-    <h2 class="section-title">SERVER <span>OWNER</span></h2>
-    <p class="section-text">Meet the owner behind SixSeven.</p>
+  <section id="players" class="reveal"><h2 class="section-title">ONLINE <span>PLAYERS</span></h2><p class="section-text">Players currently connected to SixSeven Server.</p><div class="player-count">0</div><p style="color:#bdbdbd;margin-top:8px;">Players Online</p></section>
 
-    <div class="owner-card">
-      <img class="owner-profile" src="https://i.imgur.com/6VBx3io.png" alt="Zyuuu profile picture">
-      <h3>Zyuuu</h3>
-      <div class="owner-role">👑 Owner of SixSeven Server</div>
-      <p>Zyuuu is the owner and creator of SixSeven. The goal is to build a fun, competitive, and active Minecraft Bedrock community with UHC, ranked PvP, leaderboards, giveaways, and events.</p>
-    </div>
-  </section>
+  <section class="dark-section reveal" id="leaderboards"><h2 class="section-title">TOP <span>LEADERBOARDS</span></h2><p class="section-text">Fight your way to the top and make your name known.</p><div class="leaderboard"><h3>⚔ TOP UHC PLAYERS</h3><div class="leader-row"><span><span class="rank-number">#1</span> Coming Soon</span><span>0 Wins</span></div><div class="leader-row"><span><span class="rank-number">#2</span> Coming Soon</span><span>0 Wins</span></div><div class="leader-row"><span><span class="rank-number">#3</span> Coming Soon</span><span>0 Wins</span></div></div></section>
 
-  <section id="players" class="reveal">
-    <h2 class="section-title">ONLINE <span>PLAYERS</span></h2>
-    <p class="section-text">Players currently connected to SixSeven Server.</p>
-    <div class="player-count">0</div>
-    <p style="color:#bdbdbd; margin-top:8px;">Players Online</p>
-  </section>
+  <section id="rules" class="reveal"><h2 class="section-title">SERVER <span>RULES</span></h2><p class="section-text">Follow these rules to keep SixSeven fair, fun, and active for everyone.</p><div class="features"><div class="rule-card"><h3>1. Respect Everyone</h3><p>Do not insult, bully, threaten, or harass other players or staff members.</p></div><div class="rule-card"><h3>2. No Cheating</h3><p>Hacks, clients, auto-clickers, exploits, and unfair advantages are not allowed.</p></div><div class="rule-card"><h3>3. No Teaming</h3><p>Do not team in solo UHC matches unless the event allows it.</p></div><div class="rule-card"><h3>4. No Spam</h3><p>Do not spam chat, flood messages, or repeatedly advertise anything.</p></div><div class="rule-card"><h3>5. No Advertising</h3><p>Do not advertise other Minecraft servers or Discord servers.</p></div><div class="rule-card"><h3>6. Do Not Abuse Bugs</h3><p>Report bugs or glitches to staff instead of using them.</p></div><div class="rule-card"><h3>7. Listen to Staff</h3><p>Respect staff decisions and contact them calmly on Discord.</p></div><div class="rule-card"><h3>8. No Inappropriate Names</h3><p>Keep your Minecraft username and skin appropriate.</p></div><div class="rule-card"><h3>9. Keep Chat Clean</h3><p>Avoid excessive caps, toxic messages, and inappropriate content.</p></div><div class="rule-card"><h3>10. Have Fun</h3><p>Play fair and help make SixSeven better.</p></div></div></section>
 
-  <section class="dark-section reveal" id="leaderboards">
-    <h2 class="section-title">TOP <span>LEADERBOARDS</span></h2>
-    <p class="section-text">Fight your way to the top and make your name known.</p>
+  <footer>© 2026 SixSeven Server • Not affiliated with Mojang or Microsoft.</footer>
 
-    <div class="leaderboard">
-      <h3>⚔ TOP UHC PLAYERS</h3>
-      <div class="leader-row"><span><span class="rank-number">#1</span> Coming Soon</span><span>0 Wins</span></div>
-      <div class="leader-row"><span><span class="rank-number">#2</span> Coming Soon</span><span>0 Wins</span></div>
-      <div class="leader-row"><span><span class="rank-number">#3</span> Coming Soon</span><span>0 Wins</span></div>
-    </div>
-  </section>
+  <script>
+    const menu = document.getElementById("menu");
+    const menuButton = document.querySelector(".menu-button");
 
-  <section id="rules" class="reveal">
-    <h2 class="section-title">SERVER <span>RULES</span></h2>
-    <p class="section-text">Follow these rules to keep SixSeven fair, fun, and active for everyone.</p>
+    function toggleMenu() { menu.classList.toggle("show"); menuButton.classList.toggle("active"); }
+    function closeMenu() { menu.classList.remove("show"); menuButton.classList.remove("active"); }
 
-    <div class="grid">
-      <article class="card"><h3>1. Respect Everyone</h3><p>Do not insult, bully, threaten, or harass players and staff.</p></article>
-      <article class="card"><h3>2. No Cheating</h3><p>Hacks, unfair clients, auto-clickers, and exploits are not allowed.</p></article>
-      <article class="card"><h3>3. No Teaming</h3><p>Do not team in solo UHC matches unless an event says it is allowed.</p></article>
-      <article class="card"><h3>4. No Spam</h3><p>Do not flood chat or repeatedly send the same messages.</p></article>
-      <article class="card"><h3>5. No Advertising</h3><p>Do not advertise other servers, Discords, channels, or social accounts.</p></article>
-      <article class="card"><h3>6. Report Bugs</h3><p>Report bugs to staff instead of using them for an advantage.</p></article>
-      <article class="card"><h3>7. Respect Staff</h3><p>Follow staff instructions and contact staff calmly for appeals.</p></article>
-      <article class="card"><h3>8. Appropriate Names</h3><p>Keep usernames and skins appropriate for the community.</p></article>
-      <article clas
+    window.onclick = function(event) {
+      if (!menu.contains(event.target) && !menuButton.contains(event.target)) closeMenu();
+    };
+
+    const reveals = document.querySelectorAll(".reveal");
+    function revealOnScroll() {
+      reveals.forEach(element => {
+        if (element.getBoundingClientRect().top < window.innerHeight - 100) element.classList.add("active");
+      });
+    }
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
+
+    const particleContainer = document.getElementById("particles");
+    const particleAmount = window.innerWidth < 600 ? 12 : 28;
+
+    for (let i = 0; i < particleAmount; i++) {
+      const particle = document.createElement("span");
+      particle.className = "particle";
+      particle.style.left = Math.random() * 100 + "%";
+      particle.style.animationDuration = (5 + Math.random() * 8) + "s";
+      particle.style.animationDelay = (Math.random() * 8) + "s";
+      const size = (2 + Math.random() * 4) + "px";
+      particle.style.width = size;
+      particle.style.height = size;
+      particleContainer.appendChild(particle);
+    }
+  </script>
+</body>
+</html>
