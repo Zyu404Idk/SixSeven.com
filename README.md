@@ -9,11 +9,12 @@
 
   <style>
     :root {
-      --red: #ff3030;
-      --red-dark: #9e0000;
-      --bg: #080a12;
-      --panel: rgba(13, 16, 30, 0.88);
-      --text-muted: #b9bdc9;
+      --red: #ff2424;
+      --dark-red: #920000;
+      --bg: #070911;
+      --panel: rgba(10, 13, 25, 0.88);
+      --muted: #c4c7d1;
+      --green: #59ff8a;
     }
 
     * {
@@ -28,95 +29,109 @@
 
     body {
       background: var(--bg);
-      color: #fff;
+      color: white;
       font-family: "Poppins", sans-serif;
       overflow-x: hidden;
     }
 
     .hero {
       min-height: 100vh;
-      padding: 22px;
+      padding: 18px;
       position: relative;
-      isolation: isolate;
       overflow: hidden;
+      isolation: isolate;
       background:
-        linear-gradient(rgba(5, 7, 15, 0.68), rgba(5, 7, 15, 0.96)),
+        linear-gradient(rgba(5, 7, 15, 0.70), rgba(5, 7, 15, 0.96)),
         url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1800&q=90");
-      background-size: cover;
       background-position: center;
+      background-size: cover;
     }
 
     .hero::before {
       content: "";
       position: absolute;
       z-index: -1;
-      width: 720px;
-      height: 720px;
+      width: 800px;
+      height: 800px;
+      top: -400px;
+      left: -340px;
       border-radius: 50%;
-      top: -300px;
-      left: -220px;
-      background: radial-gradient(circle, rgba(255, 25, 25, 0.45), transparent 67%);
-      filter: blur(10px);
-      animation: orbMove 10s ease-in-out infinite alternate;
+      background: radial-gradient(circle, rgba(255, 20, 20, 0.48), transparent 68%);
+      animation: redOrb 11s ease-in-out infinite alternate;
     }
 
     .hero::after {
       content: "";
       position: absolute;
-      inset: 0;
       z-index: -1;
-      pointer-events: none;
+      inset: 0;
       opacity: 0.34;
+      pointer-events: none;
       background-image:
-        linear-gradient(rgba(255, 65, 65, 0.11) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 65, 65, 0.11) 1px, transparent 1px);
+        linear-gradient(rgba(255, 65, 65, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 65, 65, 0.12) 1px, transparent 1px);
       background-size: 46px 46px;
       mask-image: linear-gradient(to bottom, #000, transparent 80%);
-      animation: movingGrid 16s linear infinite;
+      animation: gridMove 16s linear infinite;
     }
 
-    @keyframes orbMove {
-      from { transform: translate(-5%, -3%) scale(1); }
-      to { transform: translate(42%, 45%) scale(1.3); }
+    @keyframes redOrb {
+      from {
+        transform: translate(0, 0) scale(1);
+      }
+      to {
+        transform: translate(55%, 45%) scale(1.3);
+      }
     }
 
-    @keyframes movingGrid {
-      from { background-position: 0 0; }
-      to { background-position: 46px 46px; }
+    @keyframes gridMove {
+      from {
+        background-position: 0 0;
+      }
+      to {
+        background-position: 46px 46px;
+      }
     }
 
     nav {
-      max-width: 1200px;
+      width: min(1200px, 100%);
       margin: auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       position: relative;
       z-index: 10;
-      animation: fadeDown 0.75s ease both;
+      animation: navDrop 0.7s ease both;
     }
 
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-22px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes navDrop {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .nav-left,
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 11px;
     }
 
     .logo {
       font-family: "Orbitron", sans-serif;
-      font-size: clamp(21px, 4vw, 31px);
+      font-size: clamp(20px, 4vw, 31px);
       font-weight: 900;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       white-space: nowrap;
+      color: #ffffff;
       text-shadow: 0 0 10px #ff2525, 0 0 25px #ff0000;
-      animation: logoGlow 2.4s ease-in-out infinite alternate;
+      animation: logoGlow 2.3s ease-in-out infinite alternate;
     }
 
     .logo span,
@@ -126,23 +141,26 @@
     }
 
     @keyframes logoGlow {
-      from { text-shadow: 0 0 10px #ff2525, 0 0 25px #ff0000; }
-      to { text-shadow: 0 0 16px #ff5555, 0 0 40px #ff0000, 0 0 65px rgba(255, 0, 0, 0.55); }
+      from {
+        text-shadow: 0 0 10px #ff2525, 0 0 25px #ff0000;
+      }
+      to {
+        text-shadow: 0 0 16px #ff5555, 0 0 42px #ff0000;
+      }
     }
 
     .viewer-count {
       display: flex;
       align-items: center;
-      gap: 7px;
-      padding: 10px 12px;
-      border: 1px solid rgba(255, 75, 75, 0.55);
+      gap: 6px;
+      padding: 10px 11px;
+      border: 1px solid rgba(255, 75, 75, 0.6);
       border-radius: 12px;
-      background: rgba(13, 16, 30, 0.82);
-      box-shadow: 0 0 18px rgba(255, 30, 30, 0.16);
+      background: rgba(12, 15, 28, 0.86);
       font-family: "Orbitron", sans-serif;
       font-size: 11px;
       font-weight: 800;
-      letter-spacing: 1px;
+      box-shadow: 0 0 18px rgba(255, 30, 30, 0.18);
       animation: viewerFloat 3s ease-in-out infinite;
     }
 
@@ -150,9 +168,9 @@
       width: 21px;
       height: 13px;
       position: relative;
-      display: inline-block;
       border: 2px solid #ff5555;
       border-radius: 50% / 70%;
+      display: inline-block;
       box-shadow: 0 0 10px rgba(255, 60, 60, 0.65);
     }
 
@@ -169,26 +187,30 @@
     }
 
     #viewerNumber {
-      color: #58ff8a;
-      text-shadow: 0 0 10px rgba(88, 255, 138, 0.6);
+      color: var(--green);
+      text-shadow: 0 0 10px rgba(89, 255, 138, 0.65);
     }
 
     .viewer-label {
-      color: #e3e3e3;
       font-size: 9px;
+      color: #e5e5e5;
     }
 
     @keyframes viewerFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-4px);
+      }
     }
 
     .menu-button {
       width: 52px;
       height: 52px;
-      border: 1px solid rgba(255, 75, 75, 0.7);
+      border: 1px solid rgba(255, 75, 75, 0.75);
       border-radius: 14px;
-      background: rgba(17, 20, 34, 0.9);
+      background: rgba(17, 20, 34, 0.92);
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -199,7 +221,7 @@
     }
 
     .menu-button:hover {
-      transform: scale(1.07) rotate(3deg);
+      transform: scale(1.07);
       box-shadow: 0 0 24px rgba(255, 40, 40, 0.65);
     }
 
@@ -207,7 +229,7 @@
       width: 23px;
       height: 3px;
       border-radius: 20px;
-      background: #fff;
+      background: #ffffff;
       transition: 0.25s;
     }
 
@@ -229,29 +251,29 @@
       right: 0;
       width: 235px;
       padding: 10px;
-      border: 1px solid rgba(255, 60, 60, 0.58);
+      border: 1px solid rgba(255, 60, 60, 0.6);
       border-radius: 16px;
-      background: rgba(10, 13, 25, 0.97);
-      box-shadow: 0 0 30px rgba(255, 30, 30, 0.24);
-      transform: scale(0.9) translateY(-14px);
-      transform-origin: top right;
+      background: rgba(9, 12, 23, 0.98);
+      box-shadow: 0 0 30px rgba(255, 30, 30, 0.25);
       opacity: 0;
       pointer-events: none;
+      transform: translateY(-14px) scale(0.92);
+      transform-origin: top right;
       transition: 0.22s ease;
     }
 
     .menu.show {
       opacity: 1;
-      transform: scale(1) translateY(0);
       pointer-events: auto;
+      transform: translateY(0) scale(1);
     }
 
     .menu a {
       display: block;
-      padding: 11px 13px;
       margin: 3px 0;
+      padding: 11px 13px;
       border-radius: 10px;
-      color: #fff;
+      color: white;
       text-decoration: none;
       font-size: 14px;
       font-weight: 600;
@@ -260,61 +282,77 @@
 
     .menu a:hover {
       transform: translateX(6px);
-      background: linear-gradient(135deg, #ff3636, #990000);
-      box-shadow: 0 0 16px rgba(255, 45, 45, 0.28);
+      background: linear-gradient(135deg, #ff3636, #920000);
     }
 
     .hero-content {
-      max-width: 930px;
-      margin: 135px auto 0;
+      width: min(930px, 100%);
+      margin: 125px auto 0;
       text-align: center;
       position: relative;
       z-index: 2;
-      animation: heroEnter 1s ease both;
+      animation: heroEnter 0.9s ease both;
     }
 
     @keyframes heroEnter {
-      from { opacity: 0; transform: translateY(35px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .hero-title {
       font-family: "Orbitron", sans-serif;
-      font-size: clamp(48px, 10vw, 96px);
+      font-size: clamp(38px, 8.7vw, 96px);
       font-weight: 900;
-      letter-spacing: 5px;
+      letter-spacing: clamp(0px, 0.8vw, 5px);
+      line-height: 1;
+      white-space: nowrap;
+      color: white;
       text-shadow: 0 0 10px #ff2a2a, 0 0 30px #ff0000, 0 0 55px rgba(255, 0, 0, 0.55);
-      animation: titlePulse 2.6s ease-in-out infinite alternate;
+      animation: titlePulse 2.5s ease-in-out infinite alternate;
     }
 
     @keyframes titlePulse {
-      from { transform: scale(1); }
-      to { transform: scale(1.025); }
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(1.025);
+      }
     }
 
     .hero-description {
-      max-width: 720px;
+      max-width: 710px;
       margin: 22px auto;
-      color: #d4d6df;
+      color: #d7d9e1;
       font-size: 17px;
       line-height: 1.7;
     }
 
     .server-box {
       max-width: 600px;
-      margin: 35px auto 0;
+      margin: 34px auto 0;
       padding: 25px;
-      border: 1px solid rgba(255, 64, 64, 0.72);
+      border: 1px solid rgba(255, 64, 64, 0.75);
       border-radius: 20px;
       background: var(--panel);
       backdrop-filter: blur(9px);
       box-shadow: 0 0 35px rgba(255, 35, 35, 0.22);
-      animation: floatingBox 3.8s ease-in-out infinite;
+      animation: boxFloat 4s ease-in-out infinite;
     }
 
-    @keyframes floatingBox {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+    @keyframes boxFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
     }
 
     .server-box h2 {
@@ -325,7 +363,7 @@
     }
 
     .ip {
-      font-size: clamp(19px, 4vw, 24px);
+      font-size: clamp(18px, 4.5vw, 24px);
       font-weight: 800;
       word-break: break-word;
     }
@@ -341,14 +379,18 @@
     }
 
     .online {
-      color: #58ff8a;
-      text-shadow: 0 0 10px rgba(88, 255, 138, 0.65);
-      animation: onlinePulse 1.2s ease-in-out infinite alternate;
+      color: var(--green);
+      text-shadow: 0 0 10px rgba(89, 255, 138, 0.65);
+      animation: onlineBlink 1.2s ease-in-out infinite alternate;
     }
 
-    @keyframes onlinePulse {
-      from { opacity: 0.55; }
-      to { opacity: 1; }
+    @keyframes onlineBlink {
+      from {
+        opacity: 0.55;
+      }
+      to {
+        opacity: 1;
+      }
     }
 
     .buttons {
@@ -363,11 +405,10 @@
       padding: 14px 20px;
       border: 1px solid transparent;
       border-radius: 13px;
-      color: #fff;
+      color: white;
       text-decoration: none;
       font-weight: 700;
       transition: 0.25s;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
 
     .btn:hover {
@@ -377,22 +418,19 @@
     .join-btn {
       background: linear-gradient(135deg, #ff2020, #a90000);
       border-color: #ff6a6a;
-      animation: buttonGlow 2.2s ease-in-out infinite alternate;
+      box-shadow: 0 0 25px rgba(255, 35, 35, 0.4);
     }
 
     .discord-btn {
       background: linear-gradient(135deg, #6978ff, #3c48c9);
       border-color: #9aa2ff;
+      box-shadow: 0 0 22px rgba(93, 105, 255, 0.3);
     }
 
     .youtube-btn {
       background: linear-gradient(135deg, #ff2020, #9f0000);
       border-color: #ff7373;
-    }
-
-    @keyframes buttonGlow {
-      from { box-shadow: 0 0 13px rgba(255, 35, 35, 0.25); }
-      to { box-shadow: 0 0 32px rgba(255, 35, 35, 0.68); }
+      box-shadow: 0 0 22px rgba(255, 25, 25, 0.3);
     }
 
     section {
@@ -406,7 +444,7 @@
 
     .section-title {
       font-family: "Orbitron", sans-serif;
-      font-size: clamp(29px, 5vw, 43px);
+      font-size: clamp(28px, 5vw, 43px);
       letter-spacing: 2px;
       text-shadow: 0 0 14px rgba(255, 45, 45, 0.65);
     }
@@ -414,7 +452,7 @@
     .section-text {
       max-width: 760px;
       margin: 18px auto 40px;
-      color: var(--text-muted);
+      color: var(--muted);
       line-height: 1.7;
     }
 
@@ -435,7 +473,7 @@
     }
 
     .card:hover {
-      transform: translateY(-8px) scale(1.02);
+      transform: translateY(-8px);
       border-color: #ff4444;
       box-shadow: 0 0 25px rgba(255, 35, 35, 0.18);
     }
@@ -474,8 +512,12 @@
     }
 
     @keyframes profileFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-7px); }
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-7px);
+      }
     }
 
     .owner-card h3 {
@@ -500,14 +542,18 @@
       margin-top: 25px;
       font-family: "Orbitron", sans-serif;
       font-size: 64px;
-      color: #58ff8a;
-      text-shadow: 0 0 18px rgba(88, 255, 138, 0.55);
-      animation: countPulse 1.8s ease-in-out infinite alternate;
+      color: var(--green);
+      text-shadow: 0 0 18px rgba(89, 255, 138, 0.55);
+      animation: playerPulse 1.8s ease-in-out infinite alternate;
     }
 
-    @keyframes countPulse {
-      from { transform: scale(1); }
-      to { transform: scale(1.11); }
+    @keyframes playerPulse {
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(1.1);
+      }
     }
 
     .leaderboard {
@@ -537,8 +583,8 @@
     }
 
     .leader-row:hover {
+      background: rgba(255, 45, 45, 0.08);
       padding-left: 27px;
-      background: rgba(255, 50, 50, 0.08);
     }
 
     .rank-number {
@@ -549,7 +595,7 @@
     .reveal {
       opacity: 0;
       transform: translateY(35px);
-      transition: 0.75s ease;
+      transition: 0.7s ease;
     }
 
     .reveal.active {
@@ -575,12 +621,21 @@
       }
 
       .viewer-count {
-        gap: 6px;
         padding: 10px;
       }
 
+      .logo {
+        font-size: 20px;
+        letter-spacing: 1px;
+      }
+
       .hero-content {
-        margin-top: 110px;
+        margin-top: 105px;
+      }
+
+      .hero-title {
+        font-size: clamp(35px, 9vw, 52px);
+        letter-spacing: 0;
       }
 
       .server-box {
@@ -598,7 +653,7 @@
   <div class="hero" id="home">
     <nav>
       <div class="nav-left">
-        <div class="viewer-count" title="Viewer counter">
+        <div class="viewer-count">
           <span class="eye-icon"></span>
           <span id="viewerNumber">1</span>
           <span class="viewer-label">VIEWING</span>
@@ -621,15 +676,18 @@
           <a href="#players" onclick="closeMenu()">◉ Players</a>
           <a href="#leaderboards" onclick="closeMenu()">★ Leaderboards</a>
           <a href="#rules" onclick="closeMenu()">☰ Server Rules</a>
-          <a href="https://discord.gg/pjp23ub8cand" target="_blank" rel="noopener">Join Discord</a>
-          <a href="https://youtube.com/@zeusduff?si=MY8Q24IPUKt_ip_H" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://discord.gg/pjp23ub8cand" target="_blank" rel="noopener">💬 Join Discord</a>
+          <a href="https://youtube.com/@zeusduff?si=MY8Q24IPUKt_ip_H" target="_blank" rel="noopener">▶ YouTube</a>
         </div>
       </div>
     </nav>
 
     <main class="hero-content">
       <h1 class="hero-title">SIX<span>SEVEN</span></h1>
-      <p class="hero-description">The competitive Minecraft Bedrock UHC server. Survive, fight, rank up, and become a SixSeven legend.</p>
+
+      <p class="hero-description">
+        The competitive Minecraft Bedrock UHC server. Survive, fight, rank up, and become a SixSeven legend.
+      </p>
 
       <div class="server-box">
         <h2>⚔ SERVER ADDRESS</h2>
@@ -655,8 +713,8 @@
       <article class="card"><h3>💬 Friendly Staff</h3><p>Helpful staff members keep the server fair, active, and enjoyable for everyone.</p></article>
       <article class="card"><h3>🏆 Ranked Matches</h3><p>Prove your skills, climb the ranks, and earn respect in competitive PvP.</p></article>
       <article class="card"><h3>📊 Leaderboards</h3><p>See the top players, strongest fighters, and biggest winners of SixSeven.</p></article>
-      <article class="card"><h3>🎁 Giveaways</h3><p>Join our Discord server for giveaways, rewards, updates, and announcements.</p></article>
-      <article class="card"><h3>📅 Frequent Events</h3><p>Enjoy tournaments, challenges, community events, and more exciting updates.</p></article>
+      <article class="card"><h3>🎁 Giveaways</h3><p>Join Discord for giveaways, rewards, updates, and announcements.</p></article>
+      <article class="card"><h3>📅 Frequent Events</h3><p>Enjoy tournaments, challenges, community events, and more updates.</p></article>
     </div>
   </section>
 
@@ -702,11 +760,6 @@
       <article class="card"><h3>4. No Spam</h3><p>Do not flood chat or repeatedly send the same messages.</p></article>
       <article class="card"><h3>5. No Advertising</h3><p>Do not advertise other servers, Discords, channels, or social accounts.</p></article>
       <article class="card"><h3>6. Report Bugs</h3><p>Report bugs to staff instead of using them for an advantage.</p></article>
-      <article class="card"><h3>7. Respect Staff</h3><p>Follow staff instructions. Contact staff calmly on Discord for appeals.</p></article>
+      <article class="card"><h3>7. Respect Staff</h3><p>Follow staff instructions and contact staff calmly for appeals.</p></article>
       <article class="card"><h3>8. Appropriate Names</h3><p>Keep usernames and skins appropriate for the community.</p></article>
-      <article class="card"><h3>9. Keep Chat Clean</h3><p>Avoid toxic messages, excessive caps, and inappropriate public chat.</p></article>
-      <article class="card"><h3>10. Have Fun</h3><p>Play fair, enjoy the competition, and help make SixSeven better.</p></article>
-    </div>
-  </section>
-
-  <footer>© 2026 SixSeven Server • Not affiliated with Moj
+      <article clas
